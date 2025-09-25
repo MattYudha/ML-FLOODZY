@@ -30,6 +30,7 @@ class FloodFeaturesIn(BaseModel):
         return v
 
 class FloodPotentialOut(BaseModel):
+    model_config = ConfigDict(protected_namespaces=())
     label: int
     probability: float
     threshold: float
@@ -40,6 +41,7 @@ class FloodPotentialOut(BaseModel):
     cache_status: Literal["hit","miss"]
 
 class FloodHeightOut(BaseModel):
+    model_config = ConfigDict(protected_namespaces=())
     predicted_height_cm: float
     model_version: str
     features_used: List[str]

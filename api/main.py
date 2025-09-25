@@ -37,7 +37,7 @@ def health():
     return {"status": "ok", "version": APP_VERSION}
 
 @app.post("/predict/flood-potential", response_model=FloodPotentialOut)
-def predict_flood_potential(body: FloodFeaturesIn, threshold: float = 0.5, request: Request | None = None, x_api_key: str | None = Header(default=None)):
+def predict_flood_potential(body: FloodFeaturesIn, threshold: float = 0.5, x_api_key: str | None = Header(default=None)):
     if API_KEY and x_api_key != API_KEY: raise HTTPException(status_code=401, detail="Unauthorized")
     if not (0.0 <= float(threshold) <= 1.0): raise HTTPException(status_code=422, detail="threshold must be in [0,1]")
     start = time.time()
@@ -48,7 +48,7 @@ def predict_flood_potential(body: FloodFeaturesIn, threshold: float = 0.5, reque
     return FloodPotentialOut(label=label, probability=prob, threshold=float(threshold), risk_label=risk, model_version="lr", features_used=result.get("features_order", []), latency_ms=latency_ms, cache_status="miss")
 
 @app.post("/predict/flood-height", response_model=FloodHeightOut)
-def predict_flood_height(body: FloodFeaturesIn, request: Request | None = None, x_api_key: str | None = Header(default=None)):
+def predict_flood_height(body: FloodFeaturesIn, x_api_key: str | None = Header(default=None)):
     if API_KEY and x_api_key != API_KEY: raise HTTPException(status_code=401, detail="Unauthorized")
     start = time.time()
     try: result = predict_rf(body.model_dump())
@@ -57,7 +57,7 @@ def predict_flood_height(body: FloodFeaturesIn, request: Request | None = None, 
     return FloodHeightOut(predicted_height_cm=float(result["predicted_height_cm"]), model_version="rf", features_used=result.get("features_order", []), latency_ms=latency_ms)
 
 @app.post("/predict/flood-potential-xgb", response_model=FloodPotentialOut)
-def predict_flood_potential_xgb(body: FloodFeaturesIn, threshold: float = 0.5, request: Request | None = None, x_api_key: str | None = Header(default=None)):
+def predict_flood_potential_xgb(body: FloodFeaturesIn, threshold: float = 0.5, x_api_key: str | None = Header(default=None)):
     if API_KEY and x_api_key != API_KEY: raise HTTPException(status_code=401, detail="Unauthorized")
     if not (0.0 <= float(threshold) <= 1.0): raise HTTPException(status_code=422, detail="threshold must be in [0,1]")
     start = time.time()
