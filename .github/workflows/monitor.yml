@@ -1,0 +1,88 @@
+name: monitoring
+on:
+  schedule:
+    - cron: "0 0 * * *"   # daily UTC
+  workflow_dispatch:
+
+jobs:
+  drift-and-stability:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      issues: write
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - uses: actions/cache@v4
+        with:
+          path: ~/.cache/pip
+          key: ${{ runner.os }}-pip-${{ hashFiles('**/requirements.in') }}
+          restore-keys: |
+            ${{ runner.os }}-pip-
+      - name: Lock & Install deps (pip-tools + hashes)
+        run: |
+          python -m pip install --upgrade pip pip-tools
+          pip-compile --generate-hashes -o requirements.txt requirements.in
+          pip install --require-hashes -r requirements.txt
+
+      # Simulate prod inputs (replace with real pull in your infra)
+      - name: Prepare prod samples
+        run: |
+          mkdir -p data
+          cp data/sample_data.csv data/prod_sample.csv || true
+
+      - name: Detect data drift (KS-test)
+        run: |
+          python ml/detect_drift.py --train data/sample_data.csv --prod data/prod_sample.csv --out reports/drift_report.json
+
+      - name: Train quick model for baseline if missing (optional)
+        run: |
+          if [ ! -f models/xgb_pipeline.joblib ]; then python ml/train_xgb.py --data data/sample_data.csv; fi
+
+      - name: Check prediction stability (proxy concept drift)
+        run: |
+          python ml/check_prediction_stability.py --model xgb --prod data/prod_sample.csv --out reports/stability_report_xgb.json
+        continue-on-error: true
+
+      - name: Upload monitoring artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: monitoring-reports
+          path: |
+            reports/drift_report.json
+            reports/stability_report_xgb.json
+            models/versions.json
+
+      - name: Open Issue on breach
+        if: failure()  # stability check exited non-zero
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const fs = require('fs');
+            const drift = fs.existsSync('reports/drift_report.json') ? fs.readFileSync('reports/drift_report.json', 'utf8') : '{}';
+            const stab  = fs.existsSync('reports/stability_report_xgb.json') ? fs.readFileSync('reports/stability_report_xgb.json', 'utf8') : '{}';
+            const title = `Monitoring breach detected: ${new Date().toISOString()}`;
+            const body = [
+              '## Monitoring Breach',
+              'Drift / Stability checks flagged a problem.',
+              '',
+              '**Drift Report**',
+              '```json',
+              drift,
+              '```',
+              '',
+              '**Stability Report (XGB)**',
+              '```json',
+              stab,
+              '```',
+              '',
+              'Artifacts attached in workflow run.'
+            ].join('\n');
+            await github.rest.issues.create({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              title,
+              body
+            });
