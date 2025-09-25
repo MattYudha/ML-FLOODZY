@@ -1,0 +1,12 @@
+.git
+.github
+tests
+ui
+*.ipynb
+__pycache__/
+.venv/
+*.png
+*.pdf
+*.md
+.env
+docker-compose.yml
