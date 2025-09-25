@@ -1,0 +1,13 @@
+[build-system]
+requires = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "ml-floodzy"
+version = "0.0.1"
+requires-python = ">=3.10"
+dependencies = ["fastapi", "uvicorn", "pydantic>=2", "scikit-learn", "xgboost", "pandas", "numpy"]
+
+[tool.setuptools.packages.find]
+where = ["."]
+include = ["ml*", "api*"]
