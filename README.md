@@ -16,7 +16,7 @@
 
 ## 🎯 **Overview**
 
-**Floodzy-ML Hardened v2** adalah sistem prediksi banjir berbasis machine learning yang dirancang untuk lingkungan produksi. Sistem ini menggabungkan validasi data yang ketat, pembagian dataset yang time-aware (termasuk opsi spatio-temporal), caching CI yang optimal, dan Docker image yang minimal untuk deployment yang efisien.
+**Floodzy-ML Hardened v2** adalah sistem prediksi banjir berbasis machine learning yang dirancang untuk lingkungan produksi. Sistem ini menggabungkan validas data yang ketat, pembagian dataset yang time-aware (termasuk opsi spatio-temporal), caching CI yang optimal, dan Docker image yang minimal untuk deployment yang efisien.
 
 ### ✨ **Key Features**
 
@@ -29,7 +29,7 @@
 
 ---
 
-## 📁 **Project Structure**
+## 📁 **Project Structure ML FLOODZY**
 
 ```
 floodzy-ml-hardened-v2/
