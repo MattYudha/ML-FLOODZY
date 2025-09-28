@@ -1,4 +1,4 @@
-# 🌊 Floodzy-ML (Hardened v2)
+# 🌊 Floodzy-Machine Learning (Hardened v2)
 
 <div align="center">
 
