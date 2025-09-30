@@ -82,7 +82,7 @@ Sistem menggunakan validasi domain yang ketat untuk memastikan kualitas input da
 
 </div>
 
-> 💡 **Note**: Angka dapat di-tune berdasarkan data lokal. Tujuan utama: **mencegah garbage-in** dan meningkatkan stabilitas model.
+> 💡 **Note**: Angka dapat di-tune berdasarkan data lokal. Tujuan utama: **mencegah garbage-in** dan meningkatkan stabilitas model Machine Learning Floodzy.
 
 ---
 
