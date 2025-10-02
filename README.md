@@ -127,7 +127,7 @@ source .venv/bin/activate  # Linux/Mac
 pip install -r requirements.txt
 ```
 
-### 🧠 **2. Model Training**
+### 🧠 **2. Model Training Yang Di Pakai**
 
 Train different models dengan satu command:
 
