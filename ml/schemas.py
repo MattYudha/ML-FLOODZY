@@ -1,5 +1,5 @@
 from __future__ import annotations
-from pydantic import BaseModel, Field, field_validator, ConfigDict
+from pydantic import BaseModel, Field, field_validator, model_validator, ConfigDict
 from typing import Optional, List, Literal
 import math
 from ml.ml_config import DOMAIN_BOUNDS as B  # single source of truth for bounds
@@ -28,6 +28,24 @@ class FloodFeaturesIn(BaseModel):
         if v is None or (isinstance(v, float) and (math.isnan(v) or math.isinf(v))):
             raise ValueError("Value must be finite (no NaN/inf).")
         return v
+
+    ## --- PENAMBAHAN: Validasi Lintas Fitur ---
+    @model_validator(mode='after')
+    def check_domain_logic(self) -> 'FloodFeaturesIn':
+        """
+        Menambahkan validasi untuk kombinasi fitur yang tidak logis secara domain.
+        """
+        if self.suhu is not None and self.kelembapan is not None:
+            # Contoh: Suhu sangat tinggi tidak mungkin terjadi bersamaan dengan kelembapan sangat tinggi
+            if self.suhu > 40 and self.kelembapan > 70:
+                raise ValueError("Kombinasi tidak logis: suhu > 40°C dan kelembapan > 70%")
+        
+        # Anda bisa menambahkan validasi lain di sini
+        # if self.curah_hujan_24h > 200 and self.ketinggian_air_cm < 10:
+        #     raise ValueError("Kombinasi tidak logis: Curah hujan sangat tinggi namun ketinggian air rendah")
+            
+        return self
+
 
 class FloodPotentialOut(BaseModel):
     model_config = ConfigDict(protected_namespaces=())

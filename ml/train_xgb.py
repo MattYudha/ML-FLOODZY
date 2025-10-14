@@ -4,16 +4,16 @@ import pandas as pd
 from xgboost import XGBClassifier
 from sklearn.model_selection import train_test_split
 from sklearn.metrics import classification_report, roc_auc_score
+import argparse  # ### TAMBAHKAN INI ###
 
-CSV_PATH = Path("data/processed/floodzy_train_ready.csv")
+# HAPUS BARIS INI: CSV_PATH = Path("data/processed/floodzy_train_ready.csv")
 LABEL = "flood_event"
-USE_GPU = True  # set False kalau mau pakai CPU
+USE_GPU = True
 
 NUM_COLS = [
     "rain_mm", "river_level_cm", "tide_cm", "temperature_avg",
     "humidity_avg", "wind_speed", "elevation_m", "api_7d"
 ]
-
 REQUIRED_COLS = {"date", "region_id", *NUM_COLS, LABEL}
 
 
@@ -22,7 +22,7 @@ def load_data(path: Path):
     df = pd.read_csv(
         path,
         sep=",",
-        encoding="utf-8-sig",  # handle BOM
+        encoding="utf-8-sig",
         engine="python",
         skip_blank_lines=True,
         skipinitialspace=True
@@ -56,7 +56,7 @@ def build_model(use_gpu: bool) -> XGBClassifier:
         max_depth=6,
         subsample=0.8,
         colsample_bytree=0.8,
-        max_bin=256,            # irit VRAM 4GB (GTX 1650)
+        max_bin=256,
         eval_metric="auc",
         tree_method="hist",
         device="cuda" if use_gpu else "cpu",
@@ -65,8 +65,9 @@ def build_model(use_gpu: bool) -> XGBClassifier:
     return XGBClassifier(**params)
 
 
-def main():
-    X, y = load_data(CSV_PATH)
+# ### MODIFIKASI: main() sekarang menerima argumen data_path ###
+def main(data_path: str):
+    X, y = load_data(Path(data_path))
 
     try:
         X_train, X_valid, y_train, y_valid = train_test_split(
@@ -79,9 +80,7 @@ def main():
 
     model = build_model(USE_GPU)
 
-    # ---- Training fallback tiga mode ----
     try:
-        # Mode modern (pakai callback EarlyStopping)
         from xgboost.callback import EarlyStopping
         es = EarlyStopping(rounds=50, save_best=True, metric_name="auc")
         model.fit(
@@ -93,7 +92,6 @@ def main():
         print("✅ Training done with callback EarlyStopping")
     except Exception:
         try:
-            # Mode menengah (pakai argumen early_stopping_rounds)
             model.fit(
                 X_train, y_train,
                 eval_set=[(X_valid, y_valid)],
@@ -102,7 +100,6 @@ def main():
             )
             print("✅ Training done with early_stopping_rounds")
         except Exception:
-            # Mode lama (tanpa early stopping)
             model.fit(
                 X_train, y_train,
                 eval_set=[(X_valid, y_valid)],
@@ -110,13 +107,11 @@ def main():
             )
             print("✅ Training done without early stopping")
 
-    # ---- Evaluasi ----
     proba = model.predict_proba(X_valid)[:, 1]
     preds = (proba >= 0.5).astype(int)
     print("AUC:", roc_auc_score(y_valid, proba))
     print(classification_report(y_valid, preds, digits=3))
 
-    # ---- Simpan model ----
     out_dir = Path("artifacts")
     out_dir.mkdir(parents=True, exist_ok=True)
     out_path = out_dir / "xgb_floodzy_model.json"
@@ -124,5 +119,9 @@ def main():
     print(f"✅ Model saved to {out_path}")
 
 
+# ### TAMBAHKAN BLOK INI untuk memproses argumen dari command line ###
 if __name__ == "__main__":
-    main()
+    parser = argparse.ArgumentParser()
+    parser.add_argument("--data", required=True, help="Path to the training CSV file")
+    args = parser.parse_args()
+    main(args.data)

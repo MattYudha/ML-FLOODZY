@@ -1,4 +1,4 @@
-﻿date,region_id,rain_mm,river_level_cm,tide_cm,temperature_avg,humidity_avg,wind_speed,elevation_m,api_7d,flood_event
+date,region_id,rain_mm,river_level_cm,tide_cm,temperature_avg,humidity_avg,wind_speed,elevation_m,api_7d,flood_event
 2021-01-01,3174,5.2,165,110,27.5,88,2.1,22.5,5.2,0
 2021-01-01,3216,8.1,180,105,27.8,89,2.5,18.1,8.1,0
 2021-01-01,3374,2.5,155,125,28.1,85,3.1,4.5,2.5,0
