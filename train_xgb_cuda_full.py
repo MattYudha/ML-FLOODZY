@@ -8,7 +8,7 @@ from sklearn.preprocessing import LabelEncoder
 from sklearn.metrics import classification_report, roc_auc_score
 
 # ===== CONFIG =====
-CSV_PATH = "data/processed/floodzy_train_ready.csv"
+CSV_PATH = "data/processed/floodzy_new_train.csv"
 MODEL_PATH = "artifacts/xgb_floodzy_national_v2_cuda.json"
 TEST_SIZE = 0.2
 RANDOM_STATE = 42
