@@ -245,10 +245,10 @@ Gunakan uvicorn untuk menjalankan server API.
 ```
 uvicorn api.main:app --reload --port 8000
 
+
 ```
-
 Server akan aktif di http://localhost:8000. Anda dapat mengakses dokumentasi interaktif API di http://localhost:8000/docs.
-
+```
 📦 Deployment dengan Docker
 Proyek ini dilengkapi dengan Dockerfile multi-stage untuk menciptakan image yang ringan dan aman.
 
