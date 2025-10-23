@@ -1,0 +1,4 @@
+# file: C:\Users\ACER\gemini-cli\ML-FLOODZY\ml\ml_config.py
+# hypothesis_version: 6.142.3
+
+[-430.0, -20.0, 0.05, 0.2, 0.9, 1.0, 55.0, 100.0, 200.0, 1000.0, 3000.0, 50000.0, 100, 200, 400, 1000, '%Y%m%dT%H%M%SZ', 'ELEVATION_MAX_M', 'ELEVATION_MIN_M', 'FLOODCOUNT_MAX', 'RAIN_MAX_MM_24H', 'RIVER_DIST_MAX_M', 'TEMP_MAX_C', 'TEMP_MIN_C', 'WATERLEVEL_MAX_CM', 'WATER_DELTA_6H_ABS', 'WIND_MAX_KMH', 'artifacts', 'balanced', 'binary:logistic', 'class_weight', 'colsample_bytree', 'curah_hujan_24h', 'data', 'feature_names.json', 'jarak_sungai_m', 'jumlah_banjir_5th', 'kecepatan_angin', 'kelembapan', 'ketinggian_air_cm', 'lbfgs', 'learning_rate', 'lr_pipeline.joblib', 'max_depth', 'max_iter', 'mdpl', 'models', 'n_estimators', 'n_jobs', 'objective', 'random_state', 'reg_lambda', 'reports', 'rf__max_depth', 'rf__n_estimators', 'rf_pipeline.joblib', 'solver', 'subsample', 'suhu', 'terjadi_banjir', 'tren_air_6h']
