@@ -1,6 +1,6 @@
 # 🌊 Floodzy - Real-time Pendeteksi/Prediksi  dan Potensi Banjir & Monitoring Cuaca di Indonesia
 
-<div align="center">
+
 <p align="center">
   <img src="https://img.shields.io/badge/Python-3.11-blue?style=for-the-badge&logo=python" alt="Python"/>
   <img src="https://img.shields.io/badge/FastAPI-009688?style=for-the-badge&logo=fastapi" alt="FastAPI"/>
