@@ -1,3 +1,18 @@
+# 🌊 Floodzy - Real-time Pendeteksi/Prediksi  dan Potensi Banjir & Monitoring Cuaca di Indonesia
+
+<div align="center">
+<p align="center">
+  <img src="https://img.shields.io/badge/Python-3.11-blue?style=for-the-badge&logo=python" alt="Python"/>
+  <img src="https://img.shields.io/badge/FastAPI-009688?style=for-the-badge&logo=fastapi" alt="FastAPI"/>
+  <img src="https://img.shields.io/badge/Scikit--learn-F7931E?style=for-the-badge&logo=scikit-learn" alt="Scikit-learn"/>
+  <img src="https://img.shields.io/badge/XGBoost-0066B2?style=for-the-badge&logo=xgboost" alt="XGBoost"/>
+  <img src="https://img.shields.io/badge/Pandas-150458?style=for-the-badge&logo=pandas" alt="Pandas"/>
+  <img src="https://img.shields.io/badge/Docker-2496ED?style=for-the-badge&logo=docker" alt="Docker"/>
+</p>
+
+
+
+
 Floodzy-ML: Sistem Prediksi Banjir Berbasis Machine Learning
 Versi Proyek: 0.3.0
 
