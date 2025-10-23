@@ -1,6 +1,6 @@
 from __future__ import annotations
 from typing import List
-from fastapi import FastAPI, HTTPException, Header, Request
+from fastapi import FastAPI, HTTPException, HTTPException, Header, Request
 from fastapi.middleware.cors import CORSMiddleware
 import logging, os, time, json as _json
 
@@ -32,9 +32,11 @@ def _risk_label(p: float) -> str:
     if p < 0.66: return "MED"
     return "HIGH"
 
-@app.get("/healthz")
-def health():
-    return {"status": "ok", "version": APP_VERSION}
+@app.get("/health")
+async def health_check():
+    return {"status": "ok"}
+
+
 
 @app.post("/predict/flood-potential", response_model=FloodPotentialOut)
 def predict_flood_potential(body: FloodFeaturesIn, threshold: float = 0.5, x_api_key: str | None = Header(default=None)):

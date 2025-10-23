@@ -5,9 +5,10 @@ from typing import List, Dict, Any
 BASE_DIR = Path(__file__).resolve().parent.parent
 DATA_DIR = BASE_DIR / "data"
 MODELS_DIR = BASE_DIR / "models"
+ARTIFACTS_DIR = BASE_DIR / "artifacts" # TAMBAHAN: Mendefinisikan direktori artifacts
 REPORTS_DIR = BASE_DIR / "reports"
 
-for d in (DATA_DIR, MODELS_DIR, REPORTS_DIR):
+for d in (DATA_DIR, MODELS_DIR, ARTIFACTS_DIR, REPORTS_DIR):
     d.mkdir(parents=True, exist_ok=True)
 
 # === Domain Bounds (Hydrology/Meteorology guardrails) ===
@@ -59,7 +60,8 @@ TEST_SIZE: float = 0.2
 
 LR_PIPELINE_NAME = "lr_pipeline.joblib"
 RF_PIPELINE_NAME = "rf_pipeline.joblib"
-XGB_PIPELINE_NAME = "xgb_pipeline.joblib"
+# DIGANTI: Mengarahkan ke file model JSON yang baru di dalam folder artifacts
+XGB_PIPELINE_NAME = "../artifacts/xgb_floodzy_model.json" 
 FEATURE_LIST_JSON = "feature_names.json"
 
 def timestamp_tag() -> str:
