@@ -66,7 +66,6 @@ floodzy-ml/
 └── README.md               # Dokumentasi ini
 
 ```
-Tentu, ini adalah versi README.md yang telah dirapikan sesuai permintaan Anda, dengan memastikan semua bagian yang relevan seperti struktur file, contoh kode, dan perintah terminal berada di dalam blok kode (```) untuk keterbacaan maksimal.
 
 Floodzy-ML: Sistem Prediksi Banjir Berbasis Machine Learning
 Versi Proyek: 0.3.0
@@ -101,7 +100,7 @@ Deployment Siap Produksi: Dikemas dalam Docker dengan multi-stage build untuk uk
 
 🏗️ Struktur Proyek
 Struktur direktori dirancang untuk memisahkan antara logika API, kode machine learning, dan komponen pendukung lainnya.
-
+```
 floodzy-ml/
 ├── api/
 │   └── main.py             # Logika utama API (FastAPI)
