@@ -1,4 +1,4 @@
-# 🌊 Floodzy - Real-time Pendeteksi/Prediksi  dan Potensi Banjir & Monitoring Cuaca di Indonesia
+# 🌊 Machine Learning Floodzy - Real-time Pendeteksi/Prediksi  dan Potensi Banjir & Monitoring Cuaca di Indonesia
 
 
 <p align="center">
